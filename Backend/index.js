@@ -16,21 +16,30 @@ dotenv.config();
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
-// connect to mongoDB
-try {
-    mongoose.connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
-    console.log("Connected to mongoDB");
-} catch (error) {
-    console.log("Error: ", error);
-}
-
 // defining routes
 app.use("/book", bookRoute);
 app.use("/user", userRoute);
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+const startServer = async () => {
+    try {
+        await mongoose.connect(URI);
+        console.log("Connected to MongoDB");
+
+        const server = app.listen(PORT, () => {
+            console.log(`Server is listening on port ${PORT}`);
+        });
+
+        server.on("error", (error) => {
+            if (error.code === "EADDRINUSE") {
+                console.log(`Port ${PORT} is already in use. Close the old server or use another PORT.`);
+                return;
+            }
+
+            console.log("Server error:", error.message);
+        });
+    } catch (error) {
+        console.log("MongoDB connection error:", error.message);
+    }
+};
+
+startServer();
