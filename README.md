@@ -60,7 +60,7 @@ bookstoreapp/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/bookstoreapp.git
+git clone https://github.com/ravikant03/bookstoreapp.git
 ```
 
 ### 2. Backend setup
@@ -109,8 +109,7 @@ npm run dev
 
 ## 📸 Screenshots
 
-*(Add your app screenshots here)*
-(./images/bookstoreapp1.png)
+![Home Page](./images/home.png)
 
 ---
 
